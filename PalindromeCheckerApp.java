@@ -6,8 +6,21 @@ public class PalindromeCheckerApp {
         System.out.print("Enter input: ");
         String input = sc.nextLine();
 
-        PalindromeChecker checker = new PalindromeChecker();
-        boolean result = checker.checkPalindrome(input);
+        System.out.println("Choose Strategy:");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        PalindromeStrategy strategy;
+
+        if (choice == 1) {
+            strategy = new StackStrategy();
+        } else {
+            strategy = new DequeStrategy();
+        }
+
+        boolean result = strategy.check(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
@@ -15,21 +28,49 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
-    static class PalindromeChecker {
+    interface PalindromeStrategy {
+        boolean check(String input);
+    }
 
-        public boolean checkPalindrome(String input) {
+    static class StackStrategy implements PalindromeStrategy {
 
-            String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        public boolean check(String input) {
 
-            int start = 0;
-            int end = normalized.length() - 1;
+            char[] stack = new char[input.length()];
+            int top = -1;
 
-            while (start < end) {
-                if (normalized.charAt(start) != normalized.charAt(end)) {
+            for (int i = 0; i < input.length(); i++) {
+                stack[++top] = input.charAt(i);
+            }
+
+            for (int i = 0; i < input.length(); i++) {
+                if (input.charAt(i) != stack[top--]) {
                     return false;
                 }
-                start++;
-                end--;
+            }
+
+            return true;
+        }
+    }
+
+    static class DequeStrategy implements PalindromeStrategy {
+
+        public boolean check(String input) {
+
+            char[] deque = new char[input.length()];
+            int front = 0;
+            int rear = -1;
+
+            for (int i = 0; i < input.length(); i++) {
+                deque[++rear] = input.charAt(i);
+            }
+
+            while (front < rear) {
+                if (deque[front] != deque[rear]) {
+                    return false;
+                }
+                front++;
+                rear--;
             }
 
             return true;
