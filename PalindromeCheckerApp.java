@@ -6,24 +6,33 @@ public class PalindromeCheckerApp {
         System.out.print("Enter input: ");
         String input = sc.nextLine();
 
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-        int start = 0;
-        int end = normalized.length() - 1;
-        boolean isPalindrome = true;
-
-        while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
-                isPalindrome = false;
-                break;
-            }
-            start++;
-            end--;
-        }
+        PalindromeChecker checker = new PalindromeChecker();
+        boolean result = checker.checkPalindrome(input);
 
         System.out.println("Input : " + input);
-        System.out.println("Is Palindrome (Ignore Case & Spaces)? : " + isPalindrome);
+        System.out.println("Is Palindrome? : " + result);
 
         sc.close();
+    }
+
+    static class PalindromeChecker {
+
+        public boolean checkPalindrome(String input) {
+
+            String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+            int start = 0;
+            int end = normalized.length() - 1;
+
+            while (start < end) {
+                if (normalized.charAt(start) != normalized.charAt(end)) {
+                    return false;
+                }
+                start++;
+                end--;
+            }
+
+            return true;
+        }
     }
 }
