@@ -4,26 +4,23 @@ public class PalindromeCheckerApp {
         System.out.println("Welcome to the Palindrome Checker Management System");
         System.out.println("Version : 1.0");
         System.out.println("System initialized successfully");
-        System.out.println();
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Input Text: ");
         String word = scanner.nextLine();
 
-        boolean isPalindrome = true;
-        for (int i = 0; i < word.length() / 2; i++) {
+        String reversed = "";
 
-            if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
         }
-        System.out.println("Is it a Palindrome?: " + isPalindrome);
 
-        
+        if (word.equals(reversed)) {
+            System.out.println("Is it a Palindrome? True");
+        } else {
+            System.out.println("Is it a Palindrome? False");
+        }
         scanner.close();
-
-
     }
 }
